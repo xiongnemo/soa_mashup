@@ -5,11 +5,9 @@ import SOAMashup from '@/components/SOAMashup'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    {
-      path: '/',
-      name: 'SOAMashup',
-      component: SOAMashup
-    }
-  ]
+    routes: [{
+        path: '/',
+        name: 'SOAMashup',
+        component: SOAMashup
+    }]
 })

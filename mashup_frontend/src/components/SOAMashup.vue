@@ -1,10 +1,11 @@
 <template>
-  <div class="hello">
+  <div class="mashup">
     <h1 id="soa-header">{{ msg }}</h1>
     <el-input
-      placeholder="请输入内容"
+      placeholder="城市.."
       v-model="input"
       type="text"
+      @keyup.enter.native="soa_search"
       id="soa_search_content"
       class="soa_search_content_text"
       clearable
@@ -20,7 +21,7 @@
     ><el-button
       size="medium"
       @click.native="soa_search_test"
-      class="soa_search_submit"
+      class="soa_search_submit" icon="el-icon-magic-stick"
       >测试</el-button
     >
     <el-container
@@ -51,12 +52,11 @@
             </div>
           </el-col>
         </el-row>
-        <br /><br />
+
         <el-row :span="24">
           <el-col :span="8"
             ><div v-loading="loading" class="grid-content bg-purple">
               <h3 class="h3"><br />位置</h3>
-              <br />
               <br />
               城市中心：
               <a class="soa-exact" id="soa_city_position_answer">
@@ -82,7 +82,6 @@
           <el-col :span="8"
             ><div v-loading="loading" class="grid-content bg-purple">
               <h3 class="h3"><br />气象</h3>
-              <br />
               <br />
               当前天气：
               <a class="soa-exact" id="soa_city_weather_answer_weather">
@@ -143,16 +142,15 @@
             ><div v-loading="loading" class="grid-content bg-purple">
               <h3 class="h3">
                 <br />新闻<br />
-                <br />
               </h3>
               <el-table id="soa_city_news_answer" :data="tableData">
                 <el-table-column prop="news_title" label="标题" width="140">
                 </el-table-column>
-                <el-table-column prop="news_source" label="来源" width="120">
+                <el-table-column prop="news_source" label="来源" width="80">
                 </el-table-column>
-                <el-table-column prop="news_contents" label="内容" width="320">
+                <el-table-column prop="news_contents" label="内容">
                 </el-table-column>
-                <el-table-column prop="news_time" label="时间">
+                <el-table-column prop="news_time" label="时间" width="140">
                 </el-table-column>
               </el-table></div
           ></el-col>
@@ -164,6 +162,12 @@
 <style>
 body {
   background: linear-gradient(45deg, rgb(211, 220, 230), rgb(153, 169, 191));
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+::-webkit-scrollbar {
+  display: none;
 }
 
 .amap-wrapper {
@@ -225,6 +229,7 @@ body {
   background-position: center;
   min-height: 80px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .h3 {

@@ -8,7 +8,13 @@
 # install dependencies
 npm install
 
-# serve with hot reload at localhost:8082
+# serve with hot reload at localhost:8080
 npm run dev
+```
+
+Do this if something goes wrong:
+
+``` bash
+rm -rf node_modules && npm install
 ```
 

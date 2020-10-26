@@ -1,8 +1,8 @@
 const { Table } = require("element-ui");
 const { xml2js } = require("xml-js");
 
-exports.install = function (Vue, options) {
-    Vue.prototype.$soa_city_position = function (city_name, amap_center) { //全局函数1
+exports.install = function(Vue, options) {
+    Vue.prototype.$soa_city_position = function(city_name, amap_center) { //全局函数1
         var httpRequest_city_position = new XMLHttpRequest();
         var city_position_base_url =
             "http://127.0.0.1:5000/city_position?city_name=";
@@ -12,7 +12,7 @@ exports.install = function (Vue, options) {
             true
         );
         httpRequest_city_position.send();
-        httpRequest_city_position.onreadystatechange = function () {
+        httpRequest_city_position.onreadystatechange = function() {
             if (
                 httpRequest_city_position.readyState == 4 &&
                 httpRequest_city_position.status == 200
@@ -27,12 +27,12 @@ exports.install = function (Vue, options) {
                 amap_center.pop()
                 amap_center.push(city_position["city_center_longitude"])
                 amap_center.push(city_position["city_center_latitude"])
-                // amap_center.values = [city_position["city_center_longitude"], city_position["city_center_latitude"]].values
+                    // amap_center.values = [city_position["city_center_longitude"], city_position["city_center_latitude"]].values
                 console.log(amap_center)
             }
         };
     };
-    Vue.prototype.$soa_city_weather = function (city_name) { //全局函数2
+    Vue.prototype.$soa_city_weather = function(city_name) { //全局函数2
         var httpRequest_city_weather = new XMLHttpRequest();
         var city_weather_base_url =
             "http://127.0.0.1:5000/city_weather?city_name=";
@@ -42,7 +42,7 @@ exports.install = function (Vue, options) {
             true
         );
         httpRequest_city_weather.send();
-        httpRequest_city_weather.onreadystatechange = function () {
+        httpRequest_city_weather.onreadystatechange = function() {
             if (
                 httpRequest_city_weather.readyState == 4 &&
                 httpRequest_city_weather.status == 200
@@ -76,7 +76,7 @@ exports.install = function (Vue, options) {
             }
         };
     };
-    Vue.prototype.$soa_city_brief_information = function (city_name) { //全局函数3
+    Vue.prototype.$soa_city_brief_information = function(city_name) { //全局函数3
         var httpRequest_city_brief_information = new XMLHttpRequest();
         var city_brief_information_base_url =
             "http://127.0.0.1:5000/city_brief_information?city_name=";
@@ -86,7 +86,7 @@ exports.install = function (Vue, options) {
             true
         );
         httpRequest_city_brief_information.send();
-        httpRequest_city_brief_information.onreadystatechange = function () {
+        httpRequest_city_brief_information.onreadystatechange = function() {
             if (
                 httpRequest_city_brief_information.readyState == 4 &&
                 httpRequest_city_brief_information.status == 200
@@ -100,7 +100,7 @@ exports.install = function (Vue, options) {
             }
         };
     };
-    Vue.prototype.$soa_city_news = function (city_name, news_data) { //全局函数4
+    Vue.prototype.$soa_city_news = function(city_name, news_data) { //全局函数4
         var httpRequest_city_news = new XMLHttpRequest();
         var city_news_base_url =
             "http://127.0.0.1:5000/city_news?city_name=";
@@ -111,7 +111,7 @@ exports.install = function (Vue, options) {
         );
         var temp
         httpRequest_city_news.send();
-        httpRequest_city_news.onreadystatechange = function () {
+        httpRequest_city_news.onreadystatechange = function() {
             if (
                 httpRequest_city_news.readyState == 4 &&
                 httpRequest_city_news.status == 200
@@ -134,7 +134,7 @@ exports.install = function (Vue, options) {
         };
         return temp
     };
-    Vue.prototype.$soa_city_gdp = function (city_name) { //全局函数5
+    Vue.prototype.$soa_city_gdp = function(city_name) { //全局函数5
         var httpRequest_city_gdp = new XMLHttpRequest();
         var city_gdp_base_url =
             "http://127.0.0.1:5000/city_gdp?city_name=";
@@ -144,7 +144,7 @@ exports.install = function (Vue, options) {
             true
         );
         httpRequest_city_gdp.send();
-        httpRequest_city_gdp.onreadystatechange = function () {
+        httpRequest_city_gdp.onreadystatechange = function() {
             if (
                 httpRequest_city_gdp.readyState == 4 &&
                 httpRequest_city_gdp.status == 200
@@ -163,7 +163,7 @@ exports.install = function (Vue, options) {
             }
         };
     };
-    Vue.prototype.$soa_mashup_test = function (amap_center, news_data) { //全局函数6
+    Vue.prototype.$soa_mashup_test = function(amap_center, news_data) { //全局函数6
         var httpRequest_mashup = new XMLHttpRequest();
         var mashup_base_url =
             "http://127.0.0.1:5000/test";
@@ -173,12 +173,21 @@ exports.install = function (Vue, options) {
             true
         );
         httpRequest_mashup.send();
-        httpRequest_mashup.onreadystatechange = function () {
+        httpRequest_mashup.onreadystatechange = function() {
             if (
                 httpRequest_mashup.readyState == 4 &&
                 httpRequest_mashup.status == 200
             ) {
                 var response = httpRequest_mashup.responseText;
+                var test = document.getElementsByClassName("grid-content");
+                for (let index = 0; index < test.length; index++) {
+                    const element = test[index];
+                    element.style.visibility = "visible";
+                }
+                var test = document.getElementsByClassName("amap-copyright");
+                test[0].style.visibility = "visible";
+                var test = document.getElementById("soa-header");
+                test.textContent = "Now Testing..";
                 parser = new DOMParser();
                 xmlDoc = parser.parseFromString(response, "text/xml");
                 var convert = require('xml-js');
@@ -199,7 +208,7 @@ exports.install = function (Vue, options) {
                 amap_center.pop()
                 amap_center.push(parseFloat(city_position["city_center_longitude"]["_text"]))
                 amap_center.push(parseFloat(city_position["city_center_latitude"]["_text"]))
-                // city weather
+                    // city weather
                 var city_weather = response_dict["mashup"]["city_weather"];
                 console.log(city_weather);
                 var city_weather_element = document.getElementById(
@@ -258,7 +267,7 @@ exports.install = function (Vue, options) {
             }
         };
     };
-    Vue.prototype.$soa_mashup = function (city_name, amap_center, news_data, main_page) { //全局函数7
+    Vue.prototype.$soa_mashup = function(city_name, amap_center, news_data, main_page) { //全局函数7
         main_page.loading = true;
         var httpRequest_mashup = new XMLHttpRequest();
         var mashup_base_url =
@@ -269,7 +278,7 @@ exports.install = function (Vue, options) {
             true
         );
         httpRequest_mashup.send();
-        httpRequest_mashup.onreadystatechange = function () {
+        httpRequest_mashup.onreadystatechange = function() {
             if (
                 httpRequest_mashup.readyState == 4 &&
                 httpRequest_mashup.status == 200
@@ -290,8 +299,7 @@ exports.install = function (Vue, options) {
                     });
                     var test = document.getElementById("soa-header");
                     test.textContent = ":/";
-                }
-                else {
+                } else {
                     var test = document.getElementsByClassName("grid-content");
                     for (let index = 0; index < test.length; index++) {
                         const element = test[index];
@@ -321,7 +329,7 @@ exports.install = function (Vue, options) {
                     amap_center.pop()
                     amap_center.push(parseFloat(city_position["city_center_longitude"]["_text"]))
                     amap_center.push(parseFloat(city_position["city_center_latitude"]["_text"]))
-                    // city weather
+                        // city weather
                     var city_weather = response_dict["mashup"]["city_weather"];
                     console.log(city_weather);
                     var city_weather_element = document.getElementById(
